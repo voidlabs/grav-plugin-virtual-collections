@@ -1,12 +1,16 @@
 name: Virtual Collections
 slug: virtual-collections
 type: plugin
-version: 1.0.0
+version: 0.1.0
 description: Crea route virtuali configurabili per tassonomie, intervalli temporali e indici alfabetici.
 icon: sitemap
 author: { name: Void Labs }
+homepage: https://github.com/voidlabs/grav-plugin-virtual-collections
+bugs: https://github.com/voidlabs/grav-plugin-virtual-collections/issues
+keywords: grav, plugin, virtual-routes, collections, taxonomy, sitemap
 license: MIT
-compatibility: { grav: ['2.0'] }
+compatibility:
+  grav: ['2.0']
 form:
   validation: strict
   fields:
