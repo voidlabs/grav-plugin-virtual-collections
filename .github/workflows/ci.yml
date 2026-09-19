@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring
+          coverage: none
+      - name: Validate Composer metadata
+        run: composer validate --strict
+      - name: Lint PHP
+        run: php -l virtual-collections.php && php -l tests/run.php && php -l tests/clean-grav.php
+      - name: Run contract tests
+        run: composer test
+
+  grav-smoke:
+    name: Clean Grav installation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring
+          coverage: none
+      - name: Create clean Grav 2 installation
+        run: composer create-project --no-interaction --no-scripts --prefer-dist getgrav/grav:^2.0 "$RUNNER_TEMP/grav"
+      - name: Load plugin against Grav
+        run: php tests/clean-grav.php "$RUNNER_TEMP/grav"

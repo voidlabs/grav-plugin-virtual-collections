@@ -1,0 +1,32 @@
+{
+    "name": "voidlabs/grav-plugin-virtual-collections",
+    "type": "grav-plugin",
+    "description": "Configurable virtual routes for taxonomy, date and alphabetical collections in Grav 2.",
+    "keywords": ["grav", "plugin", "virtual routes", "collections", "taxonomy", "sitemap"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Void Labs",
+            "homepage": "https://github.com/voidlabs"
+        }
+    ],
+    "require": {
+        "php": "^8.3"
+    },
+    "suggest": {
+        "getgrav/grav": "Required at runtime (Grav 2.0 or newer).",
+        "voidlabs/grav-plugin-void-metadata": "Optional integration for sitemap generation."
+    },
+    "autoload": {
+        "classmap": [
+            "virtual-collections.php"
+        ]
+    },
+    "scripts": {
+        "lint": "@php -l virtual-collections.php",
+        "test": "@php tests/run.php"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
