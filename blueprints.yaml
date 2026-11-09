@@ -1,7 +1,7 @@
 name: Virtual Collections
 slug: virtual-collections
 type: plugin
-version: 0.1.0
+version: 0.2.0
 description: Crea route virtuali configurabili per tassonomie, intervalli temporali e indici alfabetici.
 icon: sitemap
 author: { name: Void Labs }

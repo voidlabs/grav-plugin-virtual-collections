@@ -262,12 +262,21 @@ final class VirtualCollectionsPlugin extends Plugin
     {
         $prefix = '/' . trim((string) ($definition['route_prefix'] ?? ''), '/');
         if ($prefix === '/') return [];
+        $routeCase = (string) ($definition['route_case'] ?? 'upper');
+        if (!in_array($routeCase, ['upper', 'lower'], true)) {
+            throw new \RuntimeException('Initial route_case must be upper or lower.');
+        }
         $letters = [];
         foreach ($this->grav['pages']->all() as $page) {
             if (!$page->published() || (($template = trim((string) ($definition['source_template'] ?? ''))) !== '' && (string) $page->template() !== $template)) continue;
             $first = function_exists('mb_substr') ? mb_substr((string) $page->title(), 0, 1, 'UTF-8') : substr((string) $page->title(), 0, 1);
             $letter = $this->upper($first);
-            if ($letter !== '') $letters[$letter] = $prefix . '/' . rawurlencode($letter);
+            if ($letter !== '') {
+                $routeLetter = $routeCase === 'lower'
+                    ? (function_exists('mb_strtolower') ? mb_strtolower($letter, 'UTF-8') : strtolower($letter))
+                    : $letter;
+                $letters[$letter] = $prefix . '/' . rawurlencode($routeLetter);
+            }
         }
         return array_values($letters);
     }

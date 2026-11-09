@@ -298,6 +298,15 @@ namespace {
     $resolvedInitial = invoke_private($initialPlugin, 'resolve', '/autori/A', $initialDefinition);
     check_contract($resolvedInitial['value'] === 'A', 'Route iniziale non risolta.');
 
+    $lowerDefinition = $initialDefinition + ['route_case' => 'lower'];
+    check_contract(invoke_private($initialPlugin, 'initialRoutes', $lowerDefinition) === ['/autori/a', '/autori/%C3%A9'], 'Lowercase initial routes or Unicode encoding incorrect.');
+    $resolvedLower = invoke_private($initialPlugin, 'resolve', '/autori/a', $lowerDefinition);
+    check_contract($resolvedLower['value'] === 'A' && $resolvedLower['tokens']['value_upper'] === 'A', 'Lowercase URLs changed the collection value/title tokens.');
+    expect_runtime_exception(
+        fn() => invoke_private($initialPlugin, 'initialRoutes', $initialDefinition + ['route_case' => 'invalid']),
+        'Invalid initial route case accepted.',
+    );
+
     expect_runtime_exception(
         fn() => invoke_private($taxonomyPlugin, 'routesForDefinition', [
             'type' => 'taxonomy',

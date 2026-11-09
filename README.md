@@ -77,6 +77,13 @@ collisioni di route vengono rifiutati con un errore esplicito.
 - `initial`: espone le iniziali presenti nei titoli pubblicati, ad esempio
   `/autori/A`; usare `value_pattern` per restringere le iniziali ammesse.
 
+Le collezioni `initial` supportano `route_case: lower` per esportare URL come
+`/autori/a`, anche tramite `virtualRoutes()`. Il default `upper` mantiene il
+comportamento precedente. La conversione supporta le iniziali Unicode; i valori
+della collezione e i token dei titoli restano maiuscoli. La risoluzione continua
+ad accettare entrambe le forme dell'URL. Valori diversi da `upper` e `lower`
+sono rifiutati durante la generazione delle route.
+
 Le route iniziali richiedono `route_prefix` e `source_template` è opzionale.
 Per i tipi `taxonomy` e `date`, `source_template`, `limit`, `pagination`,
 `order_by` e `order_dir` controllano la collezione Grav generata. Il flag

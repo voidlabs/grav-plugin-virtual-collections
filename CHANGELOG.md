@@ -1,3 +1,10 @@
+# v0.2.0
+## 2026-11-09
+
+1. [](#new)
+    * Initial collections support route_case: lower for generated and sitemap URLs, including Unicode initials.
+    * The default remains upper; collection values and title tokens are unchanged.
+
 # v0.1.0
 ## 2026-09-19
 
